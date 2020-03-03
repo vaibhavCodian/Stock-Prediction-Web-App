@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates|Montserrat:300|Tomorrow&display=swap');
+/* font-family: 'Montserrat', ;
+font-family: 'Tomorrow', ;
+font-family: 'Montserrat Alternates', ; */
+:root {
+  --primary: #f6f6f6;
+  --secondary: #1b1c1f;
+  --triCol: #21242af6;
+  --f-link: #5669d3;
+  --secondary: #1b1e1f;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--triCol);
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: var(--triCol);
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: var(--triCol);
+}
+
+
+::-moz-selection { /* Code for Firefox */
+  color: var(--primary);
+  background: var(--secondary);
+}
+
+::selection {
+  color: var(--primary);
+  background: var(--secondary);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+a {
+  text-decoration: none;
+  font-family: 'Montserrat';
+  color: var(--f-m-c);
+}
+html {
+  margin:    0 auto;
+  max-width: 1500px;
+}
+body {
+    font-family: 'Montserrat', ;
+    margin: 2px 5px;
+}
+
+h3 {
+    font-family: 'Montserrat' !important;
+    font-size: 1.5em;
+}
+
+.brand {
+    font-family: 'Montserrat' !important;
+    font-size: 2.5em;
+    border: 1px solid var(--secondary);
+    display: inline-block;
+    margin: 2px;
+    font-style: italic;
+    padding: 4px 12px;
+    font-weight: 500;
+}
+/* #Stock */
+.stock {
+  margin: 10% 30% ;
+}
+.stock input[type=text].ticker_ip {
+  width: 100%;
+  padding: 22px 40px;
+  margin: 27px 0;
+  font-size: 1.5ems;
+  box-sizing: border-box;
+  border: 2px solid var(--triCol);
+  font-size: --secondary;
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+.stock input[type=submit] {
+  background-color: var(--secondary);
+  border: none;
+  color: white;
+  font-family: 'Times New Roman', Times, serif;
+  padding: 15px 32px;
+  font-size: 1.2em;
+  font-family: 'Tomorrow' !important;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: --secondary;
+}
+
+.stock input[type=text]:hover {
+  box-shadow: 5px 8px ;
+  background: var(--hover);
+}
+.stock input[type=text]:focus {
+  background: var(--primary);
+}
+
+.stock input[type=submit]:hover {
+  box-shadow: none;
+  background: var(--primary);
+  color: var(--secondary);
+  border: 1px solid var(--triCol);
+}
+
+/* # Analysis Section */
+.content {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 25px;
+}
+.content h3 {
+    margin: 0 10%;
+    border-left: 2px solid var(--triCol);
+    padding-left: 2px;
+    font-weight: l;
+}
+.right {
+    padding: 12px 0;
+}
+.right h3 {
+    display: inline-block;
+    background: var(--triCol);
+    color: var(--primary);
+    padding: 1px 5px;
+}
+.right h3:before {
+    content: '';
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border:var(--primary) 1px solid;
+
+}
+.content .desc {
+    font-family: 'Tomorrow' !important;
+    margin: 20px 10%;
+}
+
+#img_m, #img_p {
+  width: 98%;
+}

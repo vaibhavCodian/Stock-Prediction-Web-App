@@ -4,10 +4,8 @@ font-family: 'Tomorrow', ;
 font-family: 'Montserrat Alternates', ; */
 :root {
   --primary: #f6f6f6;
-  --secondary: #1b1c1f;
-  --triCol: #21242af6;
-  --f-link: #5669d3;
-  --secondary: #1b1e1f;
+  --triCol: #353b48;
+  --secondary: #40739e;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -55,6 +53,7 @@ body {
 h3 {
     font-family: 'Montserrat' !important;
     font-size: 1.5em;
+    color: var(--triCol);
 }
 
 .brand {
@@ -123,9 +122,6 @@ h3 {
     border-left: 2px solid var(--triCol);
     padding-left: 2px;
     font-weight: l;
-}
-.right {
-    padding: 12px 0;
 }
 .right h3 {
     display: inline-block;

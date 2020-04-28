@@ -1,17 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{% if data_m %}
+{% if html_m %}
 <h1 class="pgHead"> {{ticker}} </h1>
 
 <div class="content">
 <div class="left">
-    <img src="" id="img_m" alt="Chart">
+    <!-- <img src="" id="img_m" alt="Chart"> -->
+    <div id="fig_m">    {{html_m|safe}}     </div>
     <h3>Moving Average</h3>
 </div>
 
 <div class="right">
-    <img src="" id="img_p" alt="Chart">
+    <!-- <img src="" id="img_p" alt="Chart"> -->
+    <div id="fig_f">    {{html_f|safe}}     </div>
     <h3>Prediction</h3>
     <div class="desc">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, minima exercitationem nulla deserunt nisi nihil optio provident suscipit! Dolor, autem! Molestiae eos totam aliquam optio ad nesciunt amet recusandae necessitatibus.
@@ -20,14 +22,9 @@
 </div>
 
 <script>
-    function set_data(img, data){
-        data = data.replace("b&#39;", "") //to get rid of start curly brace code 
-        data = data.replace("&#39;", "")  //to get rid of end curly bracecode 
-        document.getElementById(img).src = "data:image/png;base64,"+data; // set src
-        console.log("1")
-    }
-    set_data("img_m", "{{data_m}}")
-    set_data("img_p", "{{data_p}}")
+    // set_data("img_m", "{{data_m}}")
+    // set_data("img_p", "{{data_p}}")
+    console.log({{html_f}})
 </script>
 
 {% else %}

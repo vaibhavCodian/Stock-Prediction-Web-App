@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, url_for
 
 #for model
 import math
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt, mpld3
 import pandas as pd
 import numpy as np
 
@@ -30,6 +30,7 @@ mpl.__version__
 plt.style.use(['fast', 'seaborn-muted'])
 plt.tight_layout()
 
+
 def stock_l(ticker):
     plt.clf()
     #--> Getting Data
@@ -45,18 +46,16 @@ def stock_l(ticker):
     all_weekdays = pd.date_range(start=start_date, end=end_date, freq='B')
     close = close.reindex(all_weekdays)
     close = close.fillna(method='ffill')
-    close_px.plot(label='AAPL')
-    mavg.plot(label='mavg')
-    plt.legend()
-    # Saving mavg
-    figfile = BytesIO()
-    plt.savefig(figfile, format='png', transparent=True)
-    figfile.seek(0)  # rewind to beginning of file
-    figdata_png_m = figfile.getvalue()  # extract string (stream of bytes)
-    figdata_png_m = base64.b64encode(figdata_png_m)
-    # Prediction Part
+    
     plt.clf()
-    # style.use('fast')
+    fig, ax = plt.subplots(figsize=(6,6))
+    ax.plot(close_px.index, close_px, label=ticker)
+    ax.plot(mavg.index, mavg, label="m_avg")
+    ax.legend()
+    fig_mavg = mpld3.fig_to_html(fig)
+    
+    #  Prediction_____PART
+
     dfreg = df.loc[:,['Adj Close','Volume']]
     dfreg['HL_PCT'] = (df['High'] - df['Low']) / df['Close'] * 100.0
     dfreg['PCT_change'] = (df['Close'] - df['Open']) / df['Open'] * 100.0
@@ -77,7 +76,6 @@ def stock_l(ticker):
     X = preprocessing.scale(X)
 
     # Finally We want to find Data Series of late X and early X (train) for model generation and evaluation
-    # X_lately = X[-forecast_out:]
     X_lately = X[-forecast_out:]
     X = X[:-forecast_out]
 
@@ -88,10 +86,6 @@ def stock_l(ticker):
     # Linear regression
     clfreg = LinearRegression(n_jobs=-1)
     clfreg.fit(X, y)
-
-    # Quadratic Regression 2
-    clfpoly2 = make_pipeline(PolynomialFeatures(2), Ridge())
-    clfpoly2.fit(X, y)
 
     # Making the forecast
     forecast_set = clfreg.predict(X_lately)
@@ -106,32 +100,33 @@ def stock_l(ticker):
         next_unix += datetime.timedelta(days=1)
         dfreg.loc[next_date] = [np.nan for _ in range(len(dfreg.columns)-1)]+[i]
 
-    dfreg['Adj Close'].plot()
-    dfreg['Forecast'].plot()
-    plt.legend(loc=0)
-    plt.xlabel('Date')
-    plt.ylabel('Price')
 
-    # Saving Prediction
-    figfile = BytesIO()
-    plt.savefig(figfile, format='png', transparent=True)
-    figfile.seek(0)  # rewind to beginning of file
-    figdata_png_p = figfile.getvalue()  # extract string (stream of bytes)
-    figdata_png_p = base64.b64encode(figdata_png_p)
-    
-    return figdata_png_m, figdata_png_p
+
+    fig, ax = plt.subplots(figsize=(6,6))
+    ax.plot(dfreg['Adj Close'].index, dfreg['Adj Close'], label="Adj Close")
+    ax.plot(dfreg['Forecast'].index, dfreg['Forecast'], label="Forecast")
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Price')
+    ax.legend()
+    fig_forecast = mpld3.fig_to_html(fig)
+    # print(fig_forecast)
+
+    return fig_mavg, fig_forecast
+
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     ticker = request.args.get('ticker')
+        
     if ticker:
-        data_m, data_p = stock_l(ticker)
-        # return data_p
-        return render_template('index.html', data_m=data_m, ticker=ticker, data_p=data_p)
+        ticker = ticker.strip()
+        html_m, html_f = stock_l(ticker)
+        # print(html_f)
+        return render_template('index.html', html_m=html_m, html_f=html_f)
     else:
-        return render_template('index.html')
+        return render_template('index.html', ticker=ticker)
 
 
 

@@ -14,6 +14,10 @@ touch templates/index.html
 
 code .
 
+export FLASK_ENV=development
+export FLASK_APP=run
+export FLASK_DEBUG=True
+flask run
 
 ------------------------------------------code_//
 hw #hello world

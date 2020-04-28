@@ -15,7 +15,7 @@ touch templates/index.html
 code .
 
 export FLASK_ENV=development
-export FLASK_APP=run
+export FLASK_APP=app
 export FLASK_DEBUG=True
 flask run
 
